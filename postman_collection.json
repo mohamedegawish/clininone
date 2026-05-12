@@ -1,0 +1,972 @@
+{
+	"info": {
+		"_postman_id": "clinicone-api-collection",
+		"name": "ClinicOne API",
+		"description": "Full API collection for ClinicOne clinic management system",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://clinicone1.com/api",
+			"type": "string"
+		},
+		{
+			"key": "access_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "refresh_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "doctor_id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "clinic_id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "patient_id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "appointment_id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "schedule_id",
+			"value": "1",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "🔐 Auth",
+			"item": [
+				{
+					"name": "Register (Admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = pm.response.json();",
+									"if (json.token) {",
+									"    pm.collectionVariables.set('access_token', json.token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Admin User\",\n    \"email\": \"admin@clinic.com\",\n    \"password\": \"password123\",\n    \"role\": \"admin\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/register",
+							"host": ["{{base_url}}"],
+							"path": ["register"]
+						}
+					}
+				},
+				{
+					"name": "Register (Doctor)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = pm.response.json();",
+									"if (json.token) {",
+									"    pm.collectionVariables.set('access_token', json.token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Dr. Test\",\n    \"email\": \"doctor@clinic.com\",\n    \"password\": \"password123\",\n    \"role\": \"doctor\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/register",
+							"host": ["{{base_url}}"],
+							"path": ["register"]
+						}
+					}
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = pm.response.json();",
+									"if (json.access_token) {",
+									"    pm.collectionVariables.set('access_token', json.access_token);",
+									"}",
+									"if (json.refresh_token) {",
+									"    pm.collectionVariables.set('refresh_token', json.refresh_token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"mahmoud.ali@example.com\",\n    \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/login",
+							"host": ["{{base_url}}"],
+							"path": ["login"]
+						}
+					}
+				},
+				{
+					"name": "Get Current User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/user",
+							"host": ["{{base_url}}"],
+							"path": ["user"]
+						}
+					}
+				},
+				{
+					"name": "Forgot Password (Send OTP)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@clinic.com\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/forgot-password",
+							"host": ["{{base_url}}"],
+							"path": ["forgot-password"]
+						}
+					}
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@clinic.com\",\n    \"otp\": \"123456\",\n    \"password\": \"newpassword123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/reset-password",
+							"host": ["{{base_url}}"],
+							"path": ["reset-password"]
+						}
+					}
+				},
+				{
+					"name": "Refresh Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = pm.response.json();",
+									"if (json.access_token) {",
+									"    pm.collectionVariables.set('access_token', json.access_token);",
+									"}",
+									"if (json.refresh_token) {",
+									"    pm.collectionVariables.set('refresh_token', json.refresh_token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"refresh_token\": \"{{refresh_token}}\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/refresh-token",
+							"host": ["{{base_url}}"],
+							"path": ["refresh-token"]
+						}
+					}
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/logout",
+							"host": ["{{base_url}}"],
+							"path": ["logout"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "👨‍⚕️ Admin — Doctors",
+			"item": [
+				{
+					"name": "Create Doctor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = pm.response.json();",
+									"if (json.data && json.data.id) {",
+									"    pm.collectionVariables.set('doctor_id', json.data.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Dr. Ahmed Khaled\",\n    \"email\": \"ahmed.khaled@clinic.com\",\n    \"password\": \"password123\",\n    \"phone\": \"01234567890\",\n    \"specialty\": \"Dermatology\",\n    \"status\": \"active\",\n    \"gender\": \"male\",\n    \"governorate\": \"Cairo\",\n    \"city\": \"Nasr City\",\n    \"experience_years\": 5,\n    \"qualification\": \"MD Dermatology\",\n    \"bio\": \"Skin care specialist\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/admin/doctors",
+							"host": ["{{base_url}}"],
+							"path": ["admin", "doctors"]
+						}
+					}
+				},
+				{
+					"name": "List Doctors",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/admin/doctors",
+							"host": ["{{base_url}}"],
+							"path": ["admin", "doctors"]
+						}
+					}
+				},
+				{
+					"name": "Show Doctor",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/admin/doctors/{{doctor_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["admin", "doctors", "{{doctor_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Update Doctor",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Dr. Ahmed Khaled Updated\",\n    \"specialty\": \"Internal Medicine\",\n    \"status\": \"active\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/admin/doctors/{{doctor_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["admin", "doctors", "{{doctor_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Delete Doctor",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/admin/doctors/{{doctor_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["admin", "doctors", "{{doctor_id}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "🏥 Admin — Clinics",
+			"item": [
+				{
+					"name": "Create Clinic",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = pm.response.json();",
+									"if (json.data && json.data.id) {",
+									"    pm.collectionVariables.set('clinic_id', json.data.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"ClinicOne Main Branch\",\n    \"address\": \"Mansoura, Dakahlia\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/admin/clinics",
+							"host": ["{{base_url}}"],
+							"path": ["admin", "clinics"]
+						}
+					}
+				},
+				{
+					"name": "List Clinics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/admin/clinics",
+							"host": ["{{base_url}}"],
+							"path": ["admin", "clinics"]
+						}
+					}
+				},
+				{
+					"name": "Show Clinic",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/admin/clinics/{{clinic_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["admin", "clinics", "{{clinic_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Update Clinic",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"ClinicOne Updated\",\n    \"address\": \"Cairo, Egypt\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/admin/clinics/{{clinic_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["admin", "clinics", "{{clinic_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Delete Clinic",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/admin/clinics/{{clinic_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["admin", "clinics", "{{clinic_id}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "🧑‍🤝‍🧑 Clinic — Patients",
+			"item": [
+				{
+					"name": "Create Patient",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = pm.response.json();",
+									"if (json.data && json.data.id) {",
+									"    pm.collectionVariables.set('patient_id', json.data.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clinic_id\": {{clinic_id}},\n    \"full_name\": \"محمد أحمد حسن\",\n    \"english_name\": \"Mohamed Ahmed Hassan\",\n    \"phone\": \"01012345678\",\n    \"ssn\": \"29801011234567\",\n    \"birth_date\": \"1998-01-01\",\n    \"age\": 27,\n    \"gender\": \"male\",\n    \"nationality\": \"Egypt\",\n    \"address\": \"المنصورة، الدقهلية\",\n    \"email\": \"mohamed@example.com\",\n    \"company\": \"Vodafone\",\n    \"policy_name\": \"Gold Plan\",\n    \"class\": \"A\",\n    \"card_no\": \"INS-123456\",\n    \"status\": \"active\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/clinic/patients",
+							"host": ["{{base_url}}"],
+							"path": ["clinic", "patients"]
+						}
+					}
+				},
+				{
+					"name": "List Patients",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/clinic/patients?clinic_id={{clinic_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["clinic", "patients"],
+							"query": [
+								{"key": "clinic_id", "value": "{{clinic_id}}"}
+							]
+						}
+					}
+				},
+				{
+					"name": "Show Patient",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/clinic/patients/{{patient_id}}?clinic_id={{clinic_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["clinic", "patients", "{{patient_id}}"],
+							"query": [
+								{"key": "clinic_id", "value": "{{clinic_id}}"}
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Patient",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clinic_id\": {{clinic_id}},\n    \"full_name\": \"محمد أحمد حسن — محدث\",\n    \"phone\": \"01098765432\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/clinic/patients/{{patient_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["clinic", "patients", "{{patient_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Delete Patient",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/clinic/patients/{{patient_id}}?clinic_id={{clinic_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["clinic", "patients", "{{patient_id}}"],
+							"query": [
+								{"key": "clinic_id", "value": "{{clinic_id}}"}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "📅 Clinic — Doctor Schedules",
+			"item": [
+				{
+					"name": "Set Schedule (Single Day)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = pm.response.json();",
+									"if (json.data && json.data.id) {",
+									"    pm.collectionVariables.set('schedule_id', json.data.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"doctor_id\": {{doctor_id}},\n    \"clinic_id\": {{clinic_id}},\n    \"day_of_week\": 0,\n    \"start_time\": \"09:00\",\n    \"end_time\": \"17:00\",\n    \"slot_duration\": 30,\n    \"is_active\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/clinic/schedules",
+							"host": ["{{base_url}}"],
+							"path": ["clinic", "schedules"]
+						}
+					}
+				},
+				{
+					"name": "Set Schedule (Bulk — Full Week)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"doctor_id\": {{doctor_id}},\n    \"clinic_id\": {{clinic_id}},\n    \"schedules\": [\n        {\"day_of_week\": 0, \"start_time\": \"10:00\", \"end_time\": \"17:00\", \"slot_duration\": 30},\n        {\"day_of_week\": 1, \"start_time\": \"10:00\", \"end_time\": \"17:00\", \"slot_duration\": 30},\n        {\"day_of_week\": 2, \"start_time\": \"10:00\", \"end_time\": \"17:00\", \"slot_duration\": 30},\n        {\"day_of_week\": 3, \"start_time\": \"10:00\", \"end_time\": \"17:00\", \"slot_duration\": 30},\n        {\"day_of_week\": 4, \"start_time\": \"10:00\", \"end_time\": \"17:00\", \"slot_duration\": 30},\n        {\"day_of_week\": 6, \"start_time\": \"10:00\", \"end_time\": \"15:00\", \"slot_duration\": 15}\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/clinic/schedules/bulk",
+							"host": ["{{base_url}}"],
+							"path": ["clinic", "schedules", "bulk"]
+						}
+					}
+				},
+				{
+					"name": "List Doctor Schedules",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/clinic/schedules?doctor_id={{doctor_id}}&clinic_id={{clinic_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["clinic", "schedules"],
+							"query": [
+								{"key": "doctor_id", "value": "{{doctor_id}}"},
+								{"key": "clinic_id", "value": "{{clinic_id}}"}
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Schedule",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/clinic/schedules/{{schedule_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["clinic", "schedules", "{{schedule_id}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "📋 Clinic — Appointments",
+			"item": [
+				{
+					"name": "Get Available Slots",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/clinic/appointments/available-slots?doctor_id={{doctor_id}}&date=2026-04-26&clinic_id={{clinic_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["clinic", "appointments", "available-slots"],
+							"query": [
+								{"key": "doctor_id", "value": "{{doctor_id}}"},
+								{"key": "date", "value": "2026-04-26"},
+								{"key": "clinic_id", "value": "{{clinic_id}}"}
+							]
+						}
+					}
+				},
+				{
+					"name": "Book Appointment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = pm.response.json();",
+									"if (json.data && json.data.id) {",
+									"    pm.collectionVariables.set('appointment_id', json.data.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"doctor_id\": {{doctor_id}},\n    \"patient_id\": {{patient_id}},\n    \"clinic_id\": {{clinic_id}},\n    \"appointment_date\": \"2026-04-26\",\n    \"start_time\": \"10:00\",\n    \"notes\": \"أول زيارة — كشف عام\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/clinic/appointments",
+							"host": ["{{base_url}}"],
+							"path": ["clinic", "appointments"]
+						}
+					}
+				},
+				{
+					"name": "Book Appointment (Slot 2)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"doctor_id\": {{doctor_id}},\n    \"patient_id\": {{patient_id}},\n    \"clinic_id\": {{clinic_id}},\n    \"appointment_date\": \"2026-04-26\",\n    \"start_time\": \"10:30\",\n    \"notes\": \"متابعة\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/clinic/appointments",
+							"host": ["{{base_url}}"],
+							"path": ["clinic", "appointments"]
+						}
+					}
+				},
+				{
+					"name": "Book Appointment (Double Booking Test ❌)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"doctor_id\": {{doctor_id}},\n    \"patient_id\": {{patient_id}},\n    \"clinic_id\": {{clinic_id}},\n    \"appointment_date\": \"2026-04-26\",\n    \"start_time\": \"10:00\",\n    \"notes\": \"This should FAIL — slot already booked\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/clinic/appointments",
+							"host": ["{{base_url}}"],
+							"path": ["clinic", "appointments"]
+						}
+					}
+				},
+				{
+					"name": "List Appointments",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/clinic/appointments?clinic_id={{clinic_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["clinic", "appointments"],
+							"query": [
+								{"key": "clinic_id", "value": "{{clinic_id}}"}
+							]
+						}
+					}
+				},
+				{
+					"name": "List Appointments (Filter by Doctor)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/clinic/appointments?clinic_id={{clinic_id}}&doctor_id={{doctor_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["clinic", "appointments"],
+							"query": [
+								{"key": "clinic_id", "value": "{{clinic_id}}"},
+								{"key": "doctor_id", "value": "{{doctor_id}}"}
+							]
+						}
+					}
+				},
+				{
+					"name": "List Appointments (Filter by Status)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/clinic/appointments?clinic_id={{clinic_id}}&status=pending",
+							"host": ["{{base_url}}"],
+							"path": ["clinic", "appointments"],
+							"query": [
+								{"key": "clinic_id", "value": "{{clinic_id}}"},
+								{"key": "status", "value": "pending"}
+							]
+						}
+					}
+				},
+				{
+					"name": "List Appointments (Filter by Date)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/clinic/appointments?clinic_id={{clinic_id}}&date=2026-04-26",
+							"host": ["{{base_url}}"],
+							"path": ["clinic", "appointments"],
+							"query": [
+								{"key": "clinic_id", "value": "{{clinic_id}}"},
+								{"key": "date", "value": "2026-04-26"}
+							]
+						}
+					}
+				},
+				{
+					"name": "Show Appointment",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/clinic/appointments/{{appointment_id}}?clinic_id={{clinic_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["clinic", "appointments", "{{appointment_id}}"],
+							"query": [
+								{"key": "clinic_id", "value": "{{clinic_id}}"}
+							]
+						}
+					}
+				},
+				{
+					"name": "Confirm Appointment ✅",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clinic_id\": {{clinic_id}}\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/clinic/appointments/{{appointment_id}}/confirm",
+							"host": ["{{base_url}}"],
+							"path": ["clinic", "appointments", "{{appointment_id}}", "confirm"]
+						}
+					}
+				},
+				{
+					"name": "Complete Appointment ✔️",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clinic_id\": {{clinic_id}}\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/clinic/appointments/{{appointment_id}}/complete",
+							"host": ["{{base_url}}"],
+							"path": ["clinic", "appointments", "{{appointment_id}}", "complete"]
+						}
+					}
+				},
+				{
+					"name": "Cancel Appointment ❌",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{access_token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clinic_id\": {{clinic_id}},\n    \"cancellation_reason\": \"المريض طلب الإلغاء\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/clinic/appointments/{{appointment_id}}/cancel",
+							"host": ["{{base_url}}"],
+							"path": ["clinic", "appointments", "{{appointment_id}}", "cancel"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "🌍 Public Booking",
+			"item": [
+				{
+					"name": "Get Available Slots (Public)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"}
+						],
+						"url": {
+							"raw": "{{base_url}}/public/appointments/available-slots?doctor_id={{doctor_id}}&date=2026-04-26&clinic_id={{clinic_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["public", "appointments", "available-slots"],
+							"query": [
+								{"key": "doctor_id", "value": "{{doctor_id}}"},
+								{"key": "date", "value": "2026-04-26"},
+								{"key": "clinic_id", "value": "{{clinic_id}}"}
+							]
+						}
+					}
+				},
+				{
+					"name": "Book Appointment (Public)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clinic_id\": {{clinic_id}},\n    \"doctor_id\": {{doctor_id}},\n    \"appointment_date\": \"2026-04-26\",\n    \"start_time\": \"11:00\",\n    \"phone\": \"01122334455\",\n    \"full_name\": \"مريض جديد من الموقع\",\n    \"notes\": \"حجز اونلاين\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/public/appointments/book",
+							"host": ["{{base_url}}"],
+							"path": ["public", "appointments", "book"]
+						}
+					}
+				}
+			]
+		}
+	]
+}

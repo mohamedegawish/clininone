@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path 'c:\\\\Users\\\\Acer Nitro V\\\\Downloads\\\\cone' -Force)",
+      "Bash(Select-Object Name, FullName)",
+      "Bash(php artisan *)",
+      "Bash(mysql -u root -e \"DROP DATABASE IF EXISTS clinicone_local; CREATE DATABASE clinicone_local CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;\")",
+      "PowerShell(& \"C:\\\\xampp\\\\mysql\\\\bin\\\\mysql.exe\" -u root -e \"DROP DATABASE IF EXISTS clinicone_local; CREATE DATABASE clinicone_local CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;\" 2>&1)",
+      "Read(//c/xampp/mysql/data/clinicone_local/**)",
+      "PowerShell(cmd /c \"dir /a C:\\\\xampp\\\\mysql\\\\data\\\\clinicone_local\\\\\")",
+      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\Acer Nitro V\\\\Downloads\\\\cone\\\\resources\\\\views\" -Recurse -Include \"*.blade.php\")",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(New-Item -ItemType Directory -Force -Path \"c:\\\\Users\\\\Acer Nitro V\\\\Downloads\\\\cone\\\\resources\\\\views\\\\components\\\\prescription\")",
+      "Bash(Out-Null)",
+      "Bash(Write-Output \"done\")",
+      "PowerShell(New-Item -ItemType Directory -Force -Path \"c:\\\\Users\\\\Acer Nitro V\\\\Downloads\\\\cone\\\\resources\\\\views\\\\components\\\\prescription\")",
+      "PowerShell(\"done\")",
+      "Bash(php -r ' *)",
+      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\Acer Nitro V\\\\Downloads\\\\cone\" -Recurse -Depth 4)",
+      "Bash(Select-Object FullName)",
+      "Bash(ConvertTo-Csv -NoTypeInformation)",
+      "Bash(Out-String)",
+      "PowerShell(Get-ChildItem -Path \"c:\\\\Users\\\\Acer Nitro V\\\\Downloads\\\\cone\" -Recurse -Depth 4 | Select-Object FullName | ForEach-Object { $_.FullName })"
+    ],
+    "additionalDirectories": [
+      "C:\\xampp\\mysql\\data\\clinicone_local"
+    ]
+  }
+}

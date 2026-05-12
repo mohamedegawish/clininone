@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClinicOne — الرئيسية</title>
+  <meta name="description" content="احجز موعدك مع أفضل الأطباء فوراً. جميع العيادات، منصة واحدة ذكية.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <!-- CSS from Original Angular Project -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/home.css">
+
+  <style>
+    /* Utility for animations in vanilla JS */
+    .animate-fade-in-up {
+      animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .mobile-drawer { display: none; }
+    .mobile-drawer.open { display: flex; animation: slideInDrawer 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+    .mobile-overlay { display: none; }
+    .mobile-overlay.open { display: block; }
+  </style>
+</head>
+<body>
+
+<div class="gradient-bar" style="border-radius: 0; height: 5px"></div>
+<!-- NAVBAR -->
+<nav class="navbar home-navbar">
+  <a class="navbar-brand" href="index.html">
+    <div class="navbar-logo" style="overflow: hidden; padding: 0; background: none">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+      </svg>
+    </div>
+    <div>
+      <div class="navbar-title">ClinicOne</div>
+      <div class="navbar-subtitle">SMART MEDICAL</div>
+    </div>
+  </a>
+
+  <!-- Desktop nav -->
+  <div class="navbar-nav desktop-nav">
+    <a class="nav-link active" href="index.html">الرئيسية</a>
+    <a class="nav-link portal-link" href="/ClinicOne/dist/browser/index.html#/doctor-login">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+        <circle cx="12" cy="7" r="4" />
+      </svg>
+      بوابة الموظفين
+    </a>
+  </div>
+
+  <!-- Mobile right actions -->
+  <div class="mobile-actions">
+    <button class="hamburger-btn" id="mobile-menu-btn" aria-label="القائمة">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <line x1="3" y1="12" x2="21" y2="12" />
+        <line x1="3" y1="18" x2="21" y2="18" />
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Drawer Overlay -->
+<div class="mobile-overlay" id="mobile-overlay"></div>
+<div class="mobile-drawer" id="mobile-drawer">
+  <!-- Drawer Header -->
+  <div class="drawer-header">
+    <div class="navbar-brand">
+      <div class="navbar-logo" style="overflow: hidden; padding: 0; background: none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+        </svg>
+      </div>
+      <div>
+        <div class="navbar-title" style="color:white">ClinicOne</div>
+        <div class="navbar-subtitle" style="color:white">SMART MEDICAL</div>
+      </div>
+    </div>
+    <button class="hamburger-btn" id="mobile-menu-close">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Drawer Links -->
+  <div class="drawer-nav">
+    <a class="drawer-link active" href="index.html">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+        <polyline points="9 22 9 12 15 12 15 22" />
+      </svg>
+      الرئيسية
+    </a>
+    <a class="drawer-link" href="/ClinicOne/dist/browser/index.html#/doctor-login">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+        <circle cx="12" cy="7" r="4" />
+      </svg>
+      بوابة الموظفين
+    </a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+
+  <div class="container hero-content animate-fade-in-up" style="position: relative; z-index: 1">
+    <!-- Animated badge -->
+    <div class="hero-eyebrow">
+      موثوق به من 10,000+ مريض في مصر
+    </div>
+
+    <!-- Animated headline -->
+    <h1 class="hero-headline">
+      <span class="hero-line" style="animation-delay: 0.1s">كلينك ون</span><br />
+      <span class="hero-line" style="animation-delay: 0.4s">
+        <span class="hero-gradient">نخبة الأطباء</span>
+      </span>
+    </h1>
+
+    <p class="hero-subtitle" style="animation-delay: 0.7s">
+      احجز مواعيدك مع أفضل الأطباء فوراً.<br />
+      جميع العيادات، منصة واحدة ذكية.
+    </p>
+
+    <!-- Search -->
+    <div class="search-bar" style="animation-delay: 0.9s">
+      <svg class="search-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8" />
+        <path d="m21 21-4.35-4.35" />
+      </svg>
+      <input type="text" class="search-input" id="search-input" placeholder="ابحث بالاسم أو التخصص..." />
+    </div>
+
+    <!-- Stats -->
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-num" id="stats-doctors-count">0+</span>
+        <span class="hero-stat-label">متخصص</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">10K+</span>
+        <span class="hero-stat-label">مريض سعيد</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">4.9</span>
+        <span class="hero-stat-label">متوسط التقييم</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPECIALTIES -->
+<section class="section">
+  <div class="container">
+    <div class="filter-scroll" id="filter-scroll">
+      <button class="specialty-btn active" data-spec="all">الكل</button>
+      <!-- Specialties injected by JS -->
+    </div>
+
+    <div class="results-info">
+      <span class="results-count" id="results-count">جاري التحميل...</span>
+      <span class="results-filter" id="results-filter"></span>
+    </div>
+
+    <div class="doctors-grid" id="doctors-grid">
+      <!-- Skeletons / Cards injected by JS -->
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="navbar-brand">
+      <div class="navbar-logo" style="overflow: hidden; padding: 0; background: none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="color:var(--text-muted)">
+          <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+        </svg>
+      </div>
+      <div>
+        <div class="navbar-title">ClinicOne</div>
+        <div class="navbar-subtitle">All Clinics. One System.</div>
+      </div>
+    </div>
+    <p style="color: var(--text-muted); font-size: 12px">
+      © 2025 ClinicOne. جميع الحقوق محفوظة.
+    </p>
+  </div>
+</footer>
+
+<script type="module" src="js/home.js"></script>
+
+</body>
+</html>
